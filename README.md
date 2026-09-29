@@ -183,6 +183,11 @@ El descargador de Airbnb guarda `listings.csv.gz` en `data/raw/`. Los datos desc
 
 - [`notebooks/california_housing.ipynb`](notebooks/california_housing.ipynb): desarrollo guiado del problema principal, con limpieza, gráficos, mapa, modelos y MAE.
 - [`notebooks/airbnb_madrid.ipynb`](notebooks/airbnb_madrid.ipynb): descarga, limpieza, exploración, evaluación y reto adicional.
+- [`notebooks/insurance.ipynb`](notebooks/insurance.ipynb): limpieza y estimación didáctica del coste anual del seguro médico.
+- [`notebooks/ames_housing.ipynb`](notebooks/ames_housing.ipynb): selección de características, exploración y estimación del precio de venta en Ames.
+- [`notebooks/us_births_forecasting.ipynb`](notebooks/us_births_forecasting.ipynb): patrones del calendario, test cronológico y pronóstico de nacimientos diarios.
+- [`notebooks/electricity_demand_forecasting.ipynb`](notebooks/electricity_demand_forecasting.ipynb): demanda eléctrica, clima de Madrid y comparación con/sin temperatura.
+- [`notebooks/solar_forecasting.ipynb`](notebooks/solar_forecasting.ipynb): generación fotovoltaica y comparación de pronósticos con/sin radiación solar.
 - [`app.py`](app.py): interfaz Streamlit para probar estimaciones.
 - [`src/ml_al_alfa/data.py`](src/ml_al_alfa/data.py): limpieza, selección de variables y valores por defecto.
 - [`src/ml_al_alfa/datasets.py`](src/ml_al_alfa/datasets.py): descarga y preparación de fuentes públicas.
@@ -201,6 +206,11 @@ Machine Learning Al Alfa/
 ├── app.py
 ├── notebooks/
 │   ├── california_housing.ipynb
+│   ├── insurance.ipynb
+│   ├── ames_housing.ipynb
+│   ├── us_births_forecasting.ipynb
+│   ├── electricity_demand_forecasting.ipynb
+│   ├── solar_forecasting.ipynb
 │   └── airbnb_madrid.ipynb
 ├── scripts/download_airbnb_madrid.py
 ├── src/ml_al_alfa/
