@@ -6,6 +6,17 @@ Incluye proyectos de **viviendas de California**, **precios de Airbnb en Madrid*
 
 > **Alcance:** son estimaciones educativas basadas en datos históricos, no tasaciones ni recomendaciones comerciales. El conjunto de California procede del censo de 1990; los anuncios de Airbnb muestran precios publicados, no reservas ni importes pagados.
 
+## Fuentes de los datos
+
+Los conjuntos proceden de fuentes públicas:
+
+- **Viviendas de California:** conjunto California Housing, obtenido con [`fetch_california_housing` de scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html); se basa en datos censales de 1990.
+- **Airbnb Madrid:** anuncios públicos de la [página oficial de Inside Airbnb](https://insideairbnb.com/get-the-data/). El descargador toma la captura más reciente disponible para Madrid.
+- **Seguro médico:** archivo `insurance.csv` del repositorio público [Machine-Learning-with-R-datasets](https://github.com/stedy/Machine-Learning-with-R-datasets).
+- **Viviendas de Ames:** archivo `housing.csv` del repositorio público [ames](https://github.com/wblakecannon/ames).
+- **Nacimientos en EE. UU.:** datos diarios de 2000–2014 del repositorio [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/births), atribuidos a SSA en el nombre del archivo.
+- **Demanda eléctrica y energía solar en España:** series diarias de la API de [Red Eléctrica](https://apidatos.ree.es/). Para comparar con el tiempo se añaden datos históricos de temperatura y radiación de Madrid de [Open-Meteo](https://open-meteo.com/en/docs/historical-weather-api).
+
 ## Resultados principales
 
 En regresión usamos una partición aleatoria 80/20 (`random_state=42`); en forecasting reservamos el 20% más reciente, sin mezclar las fechas. Comparamos un baseline con regresión lineal y Random Forest. La tabla resume esta ejecución; los datos energéticos se descargan de fuentes que se actualizan.
