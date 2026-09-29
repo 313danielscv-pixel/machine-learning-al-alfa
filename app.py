@@ -125,18 +125,39 @@ def prediction_form(
     }
     values: dict[str, Any] = {}
     labels = {
-        "age": "Edad",
+        "MedInc": "Ingreso mediano (por hogar; unidades de 10.000 USD)",
+        "HouseAge": "Antigüedad de las viviendas (años)",
+        "AveRooms": "Habitaciones promedio por hogar",
+        "AveBedrms": "Dormitorios promedio por hogar",
+        "Population": "Población del grupo censal",
+        "AveOccup": "Personas promedio por hogar",
+        "Latitude": "Latitud (grados)",
+        "Longitude": "Longitud (grados; oeste es negativo)",
+        "accommodates": "Capacidad (huéspedes)",
+        "bedrooms": "Dormitorios",
+        "beds": "Camas",
+        "minimum_nights": "Estancia mínima (noches)",
+        "availability_365": "Disponibilidad (días al año)",
+        "number_of_reviews": "Reseñas recibidas",
+        "review_scores_rating": "Valoración media (sobre 5)",
+        "calculated_host_listings_count": "Anuncios del anfitrión",
+        "latitude": "Latitud (grados)",
+        "longitude": "Longitud (grados)",
+        "room_type": "Tipo de habitación",
+        "neighbourhood_cleansed": "Barrio",
+        "host_is_superhost": "¿Es superanfitrión?",
+        "age": "Edad (años)",
         "bmi": "Índice de masa corporal (IMC)",
         "children": "Número de hijos",
         "sex": "Sexo",
-        "smoker": "Fuma",
+        "smoker": "¿Fuma?",
         "region": "Región",
-        "Gr Liv Area": "Superficie habitable",
-        "Overall Qual": "Calidad general",
+        "Gr Liv Area": "Superficie habitable (pies²)",
+        "Overall Qual": "Calidad general (escala 1–10)",
         "Year Built": "Año de construcción",
-        "Garage Cars": "Plazas de garaje",
-        "Total Bsmt SF": "Superficie del sótano",
-        "Lot Area": "Superficie de la parcela",
+        "Garage Cars": "Capacidad del garaje (coches)",
+        "Total Bsmt SF": "Superficie del sótano (pies²)",
+        "Lot Area": "Superficie de la parcela (pies²)",
         "Full Bath": "Baños completos",
         "Neighborhood": "Barrio",
         "Bldg Type": "Tipo de vivienda",
@@ -155,7 +176,17 @@ def prediction_form(
                     choices = [str(defaults[feature])]
                 default_value = str(defaults[feature])
                 selected = default_value if default_value in choices else choices[0]
-                values[feature] = column.selectbox(label, choices, index=choices.index(selected))
+                format_func = str
+                if feature == "host_is_superhost":
+                    format_func = lambda value: {"t": "Sí", "f": "No"}.get(
+                        value, value
+                    )
+                values[feature] = column.selectbox(
+                    label,
+                    choices,
+                    index=choices.index(selected),
+                    format_func=format_func,
+                )
             else:
                 bounds = ranges[feature]
                 minimum, maximum = float(bounds["min"]), float(bounds["max"])
