@@ -1,0 +1,107 @@
+{
+  "dataset": "ames",
+  "model_name": "RandomForestRegressor",
+  "features": [
+    "Gr Liv Area",
+    "Overall Qual",
+    "Year Built",
+    "Garage Cars",
+    "Total Bsmt SF",
+    "Lot Area",
+    "Full Bath",
+    "Neighborhood",
+    "Bldg Type"
+  ],
+  "categories": {
+    "Neighborhood": [
+      "Blmngtn",
+      "Blueste",
+      "BrDale",
+      "BrkSide",
+      "ClearCr",
+      "CollgCr",
+      "Crawfor",
+      "Edwards",
+      "Gilbert",
+      "Greens",
+      "GrnHill",
+      "IDOTRR",
+      "Landmrk",
+      "MeadowV",
+      "Mitchel",
+      "NAmes",
+      "NPkVill",
+      "NWAmes",
+      "NoRidge",
+      "NridgHt",
+      "OldTown",
+      "SWISU",
+      "Sawyer",
+      "SawyerW",
+      "Somerst",
+      "StoneBr",
+      "Timber",
+      "Veenker"
+    ],
+    "Bldg Type": [
+      "1Fam",
+      "2fmCon",
+      "Duplex",
+      "Twnhs",
+      "TwnhsE"
+    ]
+  },
+  "numeric_ranges": {
+    "Gr Liv Area": {
+      "min": 334.0,
+      "max": 5642.0
+    },
+    "Overall Qual": {
+      "min": 1.0,
+      "max": 10.0
+    },
+    "Year Built": {
+      "min": 1872.0,
+      "max": 2010.0
+    },
+    "Garage Cars": {
+      "min": 0.0,
+      "max": 5.0
+    },
+    "Total Bsmt SF": {
+      "min": 0.0,
+      "max": 6110.0
+    },
+    "Lot Area": {
+      "min": 1300.0,
+      "max": 215245.0
+    },
+    "Full Bath": {
+      "min": 0.0,
+      "max": 4.0
+    }
+  },
+  "metrics": {
+    "BaselineMedia": {
+      "mae": 59601.55996970461,
+      "r2": -1.978505531630148e-06
+    },
+    "LinearRegression": {
+      "mae": 22459.360040440162,
+      "r2": 0.7825182322878848
+    },
+    "RandomForestRegressor": {
+      "mae": 18499.445147388993,
+      "r2": 0.8262085048703622
+    }
+  },
+  "rows": {
+    "rows_before": 2930,
+    "rows_after": 2927,
+    "rows_removed": 3,
+    "missing_values_after": 2
+  },
+  "target_mean": 180808.02801503247,
+  "random_state": 42,
+  "test_size": 0.2
+}

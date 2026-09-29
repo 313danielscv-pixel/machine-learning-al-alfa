@@ -1,0 +1,38 @@
+{
+  "dataset": "solar",
+  "rows": {
+    "rows_before": 1362,
+    "rows_after": 1348,
+    "rows_removed": 14,
+    "missing_values_after": 0
+  },
+  "model_name": "LinearRegression",
+  "best_metric_name": "LinearRegression (Con radiación solar (MJ/m²))",
+  "best_variant": "Con radiación solar (MJ/m²)",
+  "metrics": {
+    "Baseline 7 días": {
+      "mae": 27.507873396296297,
+      "r2": 0.7459612332585368
+    },
+    "LinearRegression (Calendario y datos pasados)": {
+      "mae": 19.736995122107388,
+      "r2": 0.8771631075202221
+    },
+    "RandomForestRegressor (Calendario y datos pasados)": {
+      "mae": 24.826126744309633,
+      "r2": 0.8069580368789548
+    },
+    "LinearRegression (Con radiación solar (MJ/m²))": {
+      "mae": 17.333715276000614,
+      "r2": 0.9052690958162707
+    },
+    "RandomForestRegressor (Con radiación solar (MJ/m²))": {
+      "mae": 23.68193667469926,
+      "r2": 0.812918002669972
+    }
+  },
+  "baseline_name": "Baseline 7 días",
+  "split_method": "cronológico (entrenamiento antes del test)",
+  "split_date": "2025-12-28",
+  "latest_date": "2026-09-23"
+}

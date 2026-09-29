@@ -17,6 +17,10 @@ Los conjuntos proceden de fuentes públicas:
 - **Nacimientos en EE. UU.:** datos diarios de 2000–2014 del repositorio [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/births), atribuidos a SSA en el nombre del archivo.
 - **Demanda eléctrica y energía solar en España:** series diarias de la API de [Red Eléctrica](https://apidatos.ree.es/). Para comparar con el tiempo se añaden datos históricos de temperatura y radiación de Madrid de [Open-Meteo](https://open-meteo.com/en/docs/historical-weather-api).
 
+## Random Forest
+
+Se compara Random Forest con regresión lineal y un baseline, y se elige el modelo con menor MAE. En los proyectos de regresión, si gana Random Forest, la app muestra las 12 variables con mayor importancia estimada según las divisiones de sus árboles. Esto ayuda a interpretar el modelo, pero no demuestra causalidad ni indica por sí solo si una variable aumenta o reduce la predicción.
+
 ## Resultados principales
 
 En regresión usamos una partición aleatoria 80/20 (`random_state=42`); en forecasting reservamos el 20% más reciente, sin mezclar las fechas. Comparamos un baseline con regresión lineal y Random Forest. La tabla resume esta ejecución; los datos energéticos se descargan de fuentes que se actualizan.

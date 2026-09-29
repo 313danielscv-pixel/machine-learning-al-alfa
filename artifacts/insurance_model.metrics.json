@@ -1,0 +1,65 @@
+{
+  "dataset": "insurance",
+  "model_name": "RandomForestRegressor",
+  "features": [
+    "age",
+    "bmi",
+    "children",
+    "sex",
+    "smoker",
+    "region"
+  ],
+  "categories": {
+    "region": [
+      "northeast",
+      "northwest",
+      "southeast",
+      "southwest"
+    ]
+  },
+  "numeric_ranges": {
+    "age": {
+      "min": 18.0,
+      "max": 64.0
+    },
+    "bmi": {
+      "min": 15.96,
+      "max": 53.13
+    },
+    "children": {
+      "min": 0.0,
+      "max": 5.0
+    },
+    "sex": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "smoker": {
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "metrics": {
+    "BaselineMedia": {
+      "mae": 9861.797880026175,
+      "r2": -0.008391982350864469
+    },
+    "LinearRegression": {
+      "mae": 4177.045561036322,
+      "r2": 0.8069287081198012
+    },
+    "RandomForestRegressor": {
+      "mae": 2475.584117070116,
+      "r2": 0.8919278305054104
+    }
+  },
+  "rows": {
+    "rows_before": 1338,
+    "rows_after": 1337,
+    "rows_removed": 1,
+    "missing_values_after": 0
+  },
+  "target_mean": 13279.121486655948,
+  "random_state": 42,
+  "test_size": 0.2
+}

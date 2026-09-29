@@ -1,0 +1,30 @@
+{
+  "dataset": "births",
+  "rows": {
+    "rows_before": 5479,
+    "rows_after": 5465,
+    "rows_removed": 14,
+    "missing_values_after": 0
+  },
+  "model_name": "RandomForestRegressor",
+  "best_metric_name": "RandomForestRegressor (Calendario y datos pasados)",
+  "best_variant": "Calendario y datos pasados",
+  "metrics": {
+    "Baseline 7 días": {
+      "mae": 447.23147301006406,
+      "r2": 0.8125253872029009
+    },
+    "LinearRegression (Calendario y datos pasados)": {
+      "mae": 381.93674472766077,
+      "r2": 0.9290712818011313
+    },
+    "RandomForestRegressor (Calendario y datos pasados)": {
+      "mae": 222.6011644065499,
+      "r2": 0.9752084205034612
+    }
+  },
+  "baseline_name": "Baseline 7 días",
+  "split_method": "cronológico (entrenamiento antes del test)",
+  "split_date": "2012-01-04",
+  "latest_date": "2014-12-31"
+}

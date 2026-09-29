@@ -1,0 +1,226 @@
+{
+  "dataset": "airbnb",
+  "model_name": "RandomForestRegressor",
+  "features": [
+    "accommodates",
+    "bedrooms",
+    "beds",
+    "minimum_nights",
+    "availability_365",
+    "number_of_reviews",
+    "review_scores_rating",
+    "calculated_host_listings_count",
+    "latitude",
+    "longitude",
+    "room_type",
+    "neighbourhood_cleansed",
+    "host_is_superhost"
+  ],
+  "categories": {
+    "room_type": [
+      "Entire home/apt",
+      "Hotel room",
+      "Private room",
+      "Shared room"
+    ],
+    "neighbourhood_cleansed": [
+      "Abrantes",
+      "Acacias",
+      "Adelfas",
+      "Aeropuerto",
+      "Aguilas",
+      "Alameda de Osuna",
+      "Almagro",
+      "Almenara",
+      "Almendrales",
+      "Aluche",
+      "Ambroz",
+      "Amposta",
+      "Apostol Santiago",
+      "Arapiles",
+      "Aravaca",
+      "Arcos",
+      "Argüelles",
+      "Atocha",
+      "Bellas Vistas",
+      "Berruguete",
+      "Buenavista",
+      "Butarque",
+      "Campamento",
+      "Canillas",
+      "Canillejas",
+      "Casa de Campo",
+      "Casco Histórico de Barajas",
+      "Casco Histórico de Vallecas",
+      "Casco Histórico de Vicálvaro",
+      "Castellana",
+      "Castilla",
+      "Castillejos",
+      "Chopera",
+      "Ciudad Jardín",
+      "Ciudad Universitaria",
+      "Colina",
+      "Comillas",
+      "Concepción",
+      "Corralejos",
+      "Cortes",
+      "Costillares",
+      "Cuatro Caminos",
+      "Cuatro Vientos",
+      "Cármenes",
+      "Delicias",
+      "El Goloso",
+      "El Pardo",
+      "El Plantío",
+      "El Viso",
+      "Embajadores",
+      "Entrevías",
+      "Estrella",
+      "Fontarrón",
+      "Fuente del Berro",
+      "Fuentelareina",
+      "Gaztambide",
+      "Goya",
+      "Guindalera",
+      "Hellín",
+      "Hispanoamérica",
+      "Horcajo",
+      "Ibiza",
+      "Imperial",
+      "Jerónimos",
+      "Justicia",
+      "La Paz",
+      "Legazpi",
+      "Lista",
+      "Los Angeles",
+      "Los Rosales",
+      "Lucero",
+      "Marroquina",
+      "Media Legua",
+      "Mirasierra",
+      "Moscardó",
+      "Niño Jesús",
+      "Nueva España",
+      "Numancia",
+      "Opañel",
+      "Orcasitas",
+      "Orcasur",
+      "Pacífico",
+      "Palacio",
+      "Palomas",
+      "Palomeras Bajas",
+      "Palomeras Sureste",
+      "Palos de Moguer",
+      "Pavones",
+      "Peñagrande",
+      "Pilar",
+      "Pinar del Rey",
+      "Piovera",
+      "Portazgo",
+      "Pradolongo",
+      "Prosperidad",
+      "Pueblo Nuevo",
+      "Puerta Bonita",
+      "Puerta del Angel",
+      "Quintana",
+      "Recoletos",
+      "Rejas",
+      "Rios Rosas",
+      "Rosas",
+      "Salvador",
+      "San Andrés",
+      "San Cristobal",
+      "San Diego",
+      "San Fermín",
+      "San Isidro",
+      "San Juan Bautista",
+      "San Pascual",
+      "Santa Eugenia",
+      "Simancas",
+      "Sol",
+      "Timón",
+      "Trafalgar",
+      "Universidad",
+      "Valdeacederas",
+      "Valdefuentes",
+      "Valdemarín",
+      "Valdezarza",
+      "Vallehermoso",
+      "Valverde",
+      "Ventas",
+      "Vinateros",
+      "Vista Alegre",
+      "Zofío"
+    ],
+    "host_is_superhost": [
+      "Desconocido",
+      "f",
+      "t"
+    ]
+  },
+  "numeric_ranges": {
+    "accommodates": {
+      "min": 1.0,
+      "max": 16.0
+    },
+    "bedrooms": {
+      "min": 0.0,
+      "max": 50.0
+    },
+    "beds": {
+      "min": 1.0,
+      "max": 167.0
+    },
+    "minimum_nights": {
+      "min": 1.0,
+      "max": 365.0
+    },
+    "availability_365": {
+      "min": 0.0,
+      "max": 365.0
+    },
+    "number_of_reviews": {
+      "min": 0.0,
+      "max": 1433.0
+    },
+    "review_scores_rating": {
+      "min": 1.0,
+      "max": 5.0
+    },
+    "calculated_host_listings_count": {
+      "min": 1.0,
+      "max": 449.0
+    },
+    "latitude": {
+      "min": 40.33189,
+      "max": 40.53553
+    },
+    "longitude": {
+      "min": -3.82997,
+      "max": -3.5459040932605648
+    }
+  },
+  "metrics": {
+    "BaselineMedia": {
+      "mae": 64.96786347764346,
+      "r2": -1.0640328282018885e-05
+    },
+    "LinearRegression": {
+      "mae": 41.93066545618765,
+      "r2": 0.5085535837447637
+    },
+    "RandomForestRegressor": {
+      "mae": 35.535225496725865,
+      "r2": 0.6147605336656816
+    }
+  },
+  "rows": {
+    "rows_before": 22708,
+    "rows_after": 18555,
+    "rows_removed": 4153,
+    "missing_values_after": 8034
+  },
+  "target_mean": 140.0274033953112,
+  "random_state": 42,
+  "test_size": 0.2
+}
