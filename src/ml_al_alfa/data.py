@@ -39,6 +39,29 @@ AIRBNB_CATEGORICAL_FEATURES = [
 ]
 AIRBNB_CANDIDATE_FEATURES = AIRBNB_NUMERIC_FEATURES + AIRBNB_CATEGORICAL_FEATURES
 
+INSURANCE_TARGET = "charges"
+INSURANCE_FEATURES = [
+    "age",
+    "bmi",
+    "children",
+    "sex",
+    "smoker",
+    "region",
+]
+
+AMES_TARGET = "SalePrice"
+AMES_FEATURES = [
+    "Gr Liv Area",
+    "Overall Qual",
+    "Year Built",
+    "Garage Cars",
+    "Total Bsmt SF",
+    "Lot Area",
+    "Full Bath",
+    "Neighborhood",
+    "Bldg Type",
+]
+
 
 @dataclass
 class CleaningReport:
@@ -157,6 +180,105 @@ def clean_airbnb_data(
         rows_removed=before - len(clean),
         missing_values_after=int(X.isna().sum().sum() + y.isna().sum()),
     )
+    return X, y, report
+
+
+def _clean_regression_data(
+    frame: pd.DataFrame,
+    *,
+    target: str,
+    features: list[str],
+    numeric_features: list[str],
+    dataset_label: str,
+) -> tuple[pd.DataFrame, pd.Series, CleaningReport]:
+    before = len(frame)
+    required = features + [target]
+    missing_columns = sorted(set(required) - set(frame.columns))
+    if missing_columns:
+        raise ValueError(
+            f"Faltan columnas de {dataset_label}: {missing_columns}"
+        )
+
+    clean = frame[required].copy().drop_duplicates()
+    for column in numeric_features + [target]:
+        clean[column] = pd.to_numeric(clean[column], errors="coerce")
+    clean = clean.dropna(subset=[target])
+    clean = clean.loc[clean[target].gt(0)].reset_index(drop=True)
+
+    for column in features:
+        if column not in numeric_features:
+            clean[column] = (
+                clean[column].astype("string").fillna("Desconocido").astype(str)
+            )
+
+    X = clean[features].copy()
+    y = clean[target].astype(float).copy()
+    return X, y, CleaningReport(
+        rows_before=before,
+        rows_after=len(clean),
+        rows_removed=before - len(clean),
+        missing_values_after=int(X.isna().sum().sum() + y.isna().sum()),
+    )
+
+
+def clean_insurance_data(
+    frame: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.Series, CleaningReport]:
+    X, y, report = _clean_regression_data(
+        frame,
+        target=INSURANCE_TARGET,
+        features=INSURANCE_FEATURES,
+        numeric_features=["age", "bmi", "children"],
+        dataset_label="seguro médico",
+    )
+    valid = (
+        X["age"].between(18, 100)
+        & X["bmi"].gt(0)
+        & X["children"].ge(0)
+    )
+    X["sex"] = X["sex"].str.lower().map({"female": 0, "male": 1})
+    X["smoker"] = X["smoker"].str.lower().map({"no": 0, "yes": 1})
+    valid &= X["sex"].notna() & X["smoker"].notna()
+    X = X.loc[valid].reset_index(drop=True)
+    y = y.loc[valid].reset_index(drop=True)
+    removed_invalid = report.rows_after - len(X)
+    report.rows_after = len(X)
+    report.rows_removed += removed_invalid
+    report.missing_values_after = int(X.isna().sum().sum() + y.isna().sum())
+    return X, y, report
+
+
+def clean_ames_data(
+    frame: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.Series, CleaningReport]:
+    X, y, report = _clean_regression_data(
+        frame,
+        target=AMES_TARGET,
+        features=AMES_FEATURES,
+        numeric_features=[
+            "Gr Liv Area",
+            "Overall Qual",
+            "Year Built",
+            "Garage Cars",
+            "Total Bsmt SF",
+            "Lot Area",
+            "Full Bath",
+        ],
+        dataset_label="viviendas de Ames",
+    )
+    valid = (
+        X["Gr Liv Area"].isna() | X["Gr Liv Area"].gt(0)
+    ) & (X["Overall Qual"].isna() | X["Overall Qual"].between(1, 10)) & (
+        X["Year Built"].isna() | X["Year Built"].between(1800, 2030)
+    )
+    for column in ("Garage Cars", "Total Bsmt SF", "Lot Area", "Full Bath"):
+        valid &= X[column].isna() | X[column].ge(0)
+    X = X.loc[valid].reset_index(drop=True)
+    y = y.loc[valid].reset_index(drop=True)
+    removed_invalid = report.rows_after - len(X)
+    report.rows_after = len(X)
+    report.rows_removed += removed_invalid
+    report.missing_values_after = int(X.isna().sum().sum() + y.isna().sum())
     return X, y, report
 
 

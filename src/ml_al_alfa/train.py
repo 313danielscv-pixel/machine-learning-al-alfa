@@ -19,10 +19,14 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from ml_al_alfa.data import (
+    clean_ames_data,
     clean_airbnb_data,
     clean_california_data,
+    clean_insurance_data,
     feature_defaults,
 )
+from ml_al_alfa.datasets import FORECAST_CONFIG, load_ames_frame, load_forecast_frame, load_insurance_frame
+from ml_al_alfa.forecasting import train_forecast_and_save
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PROJECT_ROOT / "data"
@@ -51,6 +55,18 @@ def load_airbnb() -> tuple[pd.DataFrame, pd.Series, dict[str, int]]:
         )
     frame = pd.read_csv(source, low_memory=False)
     X, y, report = clean_airbnb_data(frame)
+    return X, y, report.as_dict()
+
+
+def load_insurance() -> tuple[pd.DataFrame, pd.Series, dict[str, int]]:
+    frame = load_insurance_frame(RAW_DIR)
+    X, y, report = clean_insurance_data(frame)
+    return X, y, report.as_dict()
+
+
+def load_ames() -> tuple[pd.DataFrame, pd.Series, dict[str, int]]:
+    frame = load_ames_frame(RAW_DIR)
+    X, y, report = clean_ames_data(frame)
     return X, y, report.as_dict()
 
 
@@ -179,10 +195,47 @@ def train_and_save(
 
 
 def train_dataset(dataset_name: str) -> dict[str, Any]:
+    if dataset_name in FORECAST_CONFIG:
+        frame = load_forecast_frame(dataset_name, RAW_DIR)
+        artifact_path = ARTIFACTS_DIR / f"{dataset_name}_model.joblib"
+        bundle = train_forecast_and_save(
+            frame,
+            dataset_name=dataset_name,
+            output_path=artifact_path,
+        )
+        print(
+            f"\n{dataset_name.upper()} — filas: {bundle['rows']['rows_before']} "
+            f"recibidas, {bundle['rows']['rows_after']} utilizables."
+        )
+        print(f"Separacion de datos: {bundle['split_method']}.")
+        print(f"Mejor variante: {bundle['forecast']['best_variant']}.")
+        print(f"Mejor modelo: {bundle['model_name']}")
+        print("MAE en test:")
+        for name, score in bundle["metrics"].items():
+            print(f"  {name:48s} {score['mae']:.4f} (R2={score['r2']:.4f})")
+        best_mae = min(
+            score["mae"]
+            for name, score in bundle["metrics"].items()
+            if name != bundle["baseline_name"]
+        )
+        baseline_mae = bundle["metrics"][bundle["baseline_name"]]["mae"]
+        verdict = (
+            "mejora el baseline"
+            if best_mae < baseline_mae
+            else "no mejora el baseline"
+        )
+        print(f"Conclusion: el mejor modelo {verdict}.")
+        print(f"Modelo guardado en: {artifact_path}")
+        return bundle
+
     if dataset_name == "california":
         X, y, rows = load_california()
     elif dataset_name == "airbnb":
         X, y, rows = load_airbnb()
+    elif dataset_name == "insurance":
+        X, y, rows = load_insurance()
+    elif dataset_name == "ames":
+        X, y, rows = load_ames()
     else:
         raise ValueError(f"Conjunto de datos desconocido: {dataset_name}")
     bundle = train_and_save(X, y, dataset_name=dataset_name, rows=rows)
@@ -205,14 +258,18 @@ def train_dataset(dataset_name: str) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Entrenar los modelos del proyecto.")
+    datasets = ("california", "airbnb", "insurance", "ames", *FORECAST_CONFIG)
     parser.add_argument(
         "--dataset",
-        choices=("california", "airbnb", "all"),
+        choices=(*datasets, "all"),
         default="california",
-        help="Conjunto a entrenar; Airbnb requiere descargar antes listings.csv.gz.",
+        help=(
+            "Conjunto a entrenar; los datos se descargan al ejecutarlo. "
+            "Airbnb requiere descargar antes listings.csv.gz."
+        ),
     )
     args = parser.parse_args()
-    selections = ("california", "airbnb") if args.dataset == "all" else (args.dataset,)
+    selections = datasets if args.dataset == "all" else (args.dataset,)
     for selection in selections:
         train_dataset(selection)
 
